@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const ctrlMain = require('../controllers/main');
 const ctrlAdmin = require('../controllers/admin');
-const ctrlCustomer = require('../controllers/customer');
+const ctrlCampaign = require('../controllers/campaign');
 const ctrlProduct = require('../controllers/product');
 const ctrlAnalytics = require('../controllers/analytics');
 
@@ -22,17 +22,17 @@ router
 router.get('/transactions/credit', ctrlAdmin.credit);
 router.get('/transactions/cash', ctrlAdmin.cash);
 
-/* Customer CRUD */
+/* Campaign CRUD */
 router
-    .route('/customer')
-    .get(ctrlCustomer.list)
-    .post(ctrlCustomer.add);
+    .route('/campaign')
+    .get(ctrlCampaign.list)
+    .post(ctrlCampaign.add);
 
 router
-    .route('/customer/:customerId')
-    .get(ctrlCustomer.readOne)
-    .put(ctrlCustomer.updateOne)
-    .delete(ctrlCustomer.removeOne);
+    .route('/campaign/:campaignId')
+    .get(ctrlCampaign.readOne)
+    .put(ctrlCampaign.updateOne)
+    .delete(ctrlCampaign.removeOne);
 
 /* Product CRUD */
 router
