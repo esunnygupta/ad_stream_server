@@ -8,6 +8,7 @@ var db = admin.firebase.firestore();
 const list = async (req, res) => {
     const advertise = [];
     const videos = [];
+    const devices = [];
     console.log("Advertisement List");
     const docs = db.collection('playlist');
     const snapshot = await docs.get();
@@ -20,11 +21,18 @@ const list = async (req, res) => {
     video_snapshot.forEach(doc => {
         console.log(doc.id, '=>', doc.data());
         videos.push(doc.data());
-    })
+    });
+    const device_docs = db.collection('devices');
+    const device_snapshot = await device_docs.get();
+    device_snapshot.forEach(doc => {
+        console.log(doc.id, '=>', doc.data());
+        devices.push(doc.data());
+    });
     res.render('campaign', { 
         title: 'iSense',
         advertisementList: advertise,
-        videoList: videos
+        videoList: videos,
+        deviceList: devices
     });
 };
 

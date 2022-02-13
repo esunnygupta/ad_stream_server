@@ -6,6 +6,7 @@ const ctrlCampaign = require('../controllers/campaign');
 const ctrlProduct = require('../controllers/product');
 const ctrlAnalytics = require('../controllers/analytics');
 const ctrlUpload = require('../controllers/upload');
+const ctrlDevice = require('../controllers/devices');
 
 /* GET home page. */
 router.get('/', ctrlMain.index);
@@ -40,6 +41,11 @@ router
     .route('/upload')
     .get(ctrlUpload.list)
     .post(ctrlUpload.uploadS3, ctrlUpload.add);
+
+/* Device CR */
+router
+    .route('/device')
+    .post(ctrlDevice.add);
 
 /* Product CRUD */
 router
