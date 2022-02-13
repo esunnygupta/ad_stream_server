@@ -64,3 +64,20 @@ block body
 					div.actions
 						input(type="submit", value="Upload Video")
 					br
+				h2.sub-header Upload List
+				table.table.table-striped
+					tr
+						th Campaign Name
+						th Video Link
+						th Manage
+					each key in videoList
+						tr
+							td= key.video_name
+							td= key.video_link
+							td
+								button(class='btn btn-success btn-xs' type=button)
+									i(class='far fa-edit fa-sm')
+								|
+								|
+								button(class='btn btn-danger btn-xs' type=button)
+									i(class='far fa-trash-alt fa-sm')

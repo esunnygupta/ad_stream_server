@@ -6,8 +6,8 @@ const schedule = require('node-schedule');
 var db = admin.firebase.firestore();
 
 const list = async (req, res) => {
-    const advertise = []
-    const videos = []
+    const advertise = [];
+    const videos = [];
     console.log("Advertisement List");
     const docs = db.collection('playlist');
     const snapshot = await docs.get();

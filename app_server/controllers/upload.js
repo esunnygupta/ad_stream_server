@@ -7,8 +7,16 @@ const AWS = require('aws-sdk');
 var db = admin.firebase.firestore();
 
 const list = async (req, res) => {
+    const videos = [];
+    const video_docs = db.collection('uploads');
+    const video_snapshot = await video_docs.get();
+    video_snapshot.forEach(doc => {
+        console.log(doc.id, '=>', doc.data());
+        videos.push(doc.data());
+    });
     res.render('upload', {
-        title: 'iSense'
+        title: 'iSense',
+        videoList: videos
     });
 };
 
