@@ -71,7 +71,13 @@ const add = async (req, res) => {
                     time: start_time 
                 };
                 const jsonString = JSON.stringify(json_message);
-                var scheduledDate = new Date(start_time);
+                var current = new Date(Date.now());
+                console.log("Current time is: ", current);
+                var startTime = new Date(start_time);
+                console.log("Start Time is: ", startTime);
+                var localOffset = startTime.getTime() + startTime.getTimezoneOffset() * 60000;
+                var utcTime = localOffset + (3600000 * -5.5);
+                var scheduledDate = new Date(utcTime);
                 console.log("Scheduled time is: ", scheduledDate);
                 schedule.scheduleJob(scheduledDate, function() {
                     console.log("running scheduled job...");
