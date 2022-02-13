@@ -5,6 +5,7 @@ const ctrlAdmin = require('../controllers/admin');
 const ctrlCampaign = require('../controllers/campaign');
 const ctrlProduct = require('../controllers/product');
 const ctrlAnalytics = require('../controllers/analytics');
+const ctrlUpload = require('../controllers/upload');
 
 /* GET home page. */
 router.get('/', ctrlMain.index);
@@ -33,6 +34,12 @@ router
     .get(ctrlCampaign.readOne)
     .put(ctrlCampaign.updateOne)
     .delete(ctrlCampaign.removeOne);
+
+/* Upload S3 */
+router
+    .route('/upload')
+    .get(ctrlUpload.list)
+    .post(ctrlUpload.uploadS3, ctrlUpload.add);
 
 /* Product CRUD */
 router

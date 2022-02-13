@@ -7,6 +7,7 @@ var db = admin.firebase.firestore();
 
 const list = async (req, res) => {
     const advertise = []
+    const videos = []
     console.log("Advertisement List");
     const docs = db.collection('playlist');
     const snapshot = await docs.get();
@@ -14,16 +15,36 @@ const list = async (req, res) => {
         console.log(doc.id, '=>', doc.data());
         advertise.push(doc.data());
     });
+    const video_docs = db.collection('uploads');
+    const video_snapshot = await video_docs.get();
+    video_snapshot.forEach(doc => {
+        console.log(doc.id, '=>', doc.data());
+        videos.push(doc.data());
+    })
     res.render('campaign', { 
         title: 'iSense',
-        advertisementList: advertise
+        advertisementList: advertise,
+        videoList: videos
     });
 };
 
 const add = async (req, res) => {
     console.log("Request:\n", req.body);
-    video_link = req.body.video_link;
-    start_time = req.body.start_time;
+    let video_link = "";
+    const campaign_name = req.body.campaign_name;
+    const video_docs = db.collection('uploads');
+    const snapshot = await video_docs.where('video_name', '==', campaign_name).get();
+    if (snapshot.empty) {
+        console.log("No documents found.");
+        res
+            .status(304)
+            .json({'message': 'No video found.'});
+    }
+    snapshot.forEach(doc => {
+        console.log(doc.id, "=>", doc.data());
+        video_link = doc.data().video_link;
+    });
+    const start_time = req.body.start_time;
     const doc = db.collection('playlist').doc(start_time);
     await doc.get().then((result) => {
         if(result.exists) {
@@ -33,6 +54,7 @@ const add = async (req, res) => {
                 .json({'message': 'Advertisement already exists.'});
         } else {
             doc.set({
+                'campaign_name': campaign_name,
                 'video_link': video_link,
                 'start_time': start_time,
             }).then(function(result) {

@@ -39,44 +39,28 @@ block body
 						a(href='#') Export
 				| Manage
 				ul.nav.nav-sidebar
-					li.active
-						a(href='/campaign') 
-							| Campaign
-							span.sr-only (current)
 					li
-						a(href='/upload') Upload Video
+						a(href='/campaign') Campaign
+					li.active
+						a(href='/upload') 
+							| Upload Video
+							span.sr-only (current)
 			.col-sm-9.col-sm-offset-3.col-md-10.col-md-offset-2.main
-				h1.page-header Create Campaign
-				form(name="add-campaign" action="/campaign" method="post")
+				h1.page-header Upload Video
+				form(name="upload-video" action="/upload" method="post" enctype='multipart/form-data')
 					div.input
-						label(for='campaignName') Campaign Name
+						label.sr-only(for='campaignName') Campaign Name
+						input#campaignName.form-control(type="text", placeholder="Campaign Name", required='', autofocus='', name="video_name")
 						br
-						select#campaignName(name='campaign_name', required='', autofocus='')
-							each val in videoList
-								option=val.video_name
 					div.input
+						label.sr-only(for='videoLink') Video Link
+						input#videoLink.form-control(type="text", placeholder="Video Link", name="video_link")
 						br
-						label(for='date') Date
+						| OR
 						br
-						input(type="datetime-local", name="start_time", required='')
+						br
+						input(type='file', name="video")
 					br
 					div.actions
-						input(type="submit", value="Start Campaign")
+						input(type="submit", value="Upload Video")
 					br
-				h2.sub-header Campaign List
-				table.table.table-striped
-					tr
-						th Campaign Name
-						th Start Time
-						th Manage
-					each key in advertisementList
-						tr
-							td= key.campaign_name
-							td= key.start_time
-							td
-								button(class='btn btn-success btn-xs' type=button)
-									i(class='far fa-edit fa-sm')
-								|
-								|
-								button(class='btn btn-danger btn-xs' type=button)
-									i(class='far fa-trash-alt fa-sm')
