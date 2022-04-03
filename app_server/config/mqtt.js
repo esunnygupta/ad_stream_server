@@ -1,7 +1,7 @@
 const mqtt = require('mqtt');
 
 // const host = '192.168.1.14';
-const host = '127.0.0.1';
+const host = '3.109.20.0';
 const port = '1883';
 const clientId = `stream_${Math.random().toString(16).slice(3)}`;
 
